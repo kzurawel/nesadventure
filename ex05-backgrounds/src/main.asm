@@ -14,6 +14,7 @@ direction:  .res 1
 .import draw_sprite
 .import update_sprite_position
 .import read_controller1
+.import draw_backgrounds
 
 .proc irq_handler
   RTI
@@ -43,6 +44,10 @@ vblankwait:     ; wait for PPU to fully boot up
   JSR update_sprite_position
   JSR draw_sprite
 
+  LDA #$00
+  STA PPUSCROLL
+  STA PPUSCROLL
+
   RTI
 .endproc
 
@@ -51,6 +56,7 @@ vblankwait:     ; wait for PPU to fully boot up
   STA sprite_x    ; these are stored in zeropage
   LDA #$30
   STA sprite_y
+
 
   LDX PPUSTATUS   ; reset PPUADDR latch
   LDX #$3f
@@ -64,6 +70,10 @@ copy_palettes:
   INX
   CPX #$20          ; have we copied 32 values?
   BNE copy_palettes ; if no, repeat
+
+  ; set up the backgrounds
+  ; here, we only need to do this once
+  JSR draw_backgrounds
 
 vblankwait:       ; wait for another vblank before continuing
   BIT PPUSTATUS
@@ -81,9 +91,12 @@ forever:
 .segment "RODATA"
 palettes:
 ; background palettes
-.byte $29, $00, $16, $30
-.byte $29, $01, $0f, $31
-.byte $29, $06, $16, $26
+; first palette - trees
+.byte $29, $09, $19, $17
+; second palette - water
+.byte $29, $11, $21, $31
+; third palette - desert
+.byte $29, $0f, $37, $26
 .byte $29, $09, $19, $29
 
 ; sprite palettes
@@ -96,4 +109,4 @@ palettes:
 .addr nmi_handler, reset_handler, irq_handler
 
 .segment "CHR"
-.incbin "sprites.chr"
+.incbin "backgrounds.chr"
