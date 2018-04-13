@@ -1,5 +1,5 @@
 build: main sprite input backgrounds
-	ld65 src/*.o -C nes.cfg -o ex05-backgrounds.nes
+	ld65 src/*.o -C nes.cfg -o ex5-backgrounds.nes
 
 main:
 	ca65 src/main.asm

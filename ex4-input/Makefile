@@ -1,5 +1,5 @@
 build: main sprite input
-	ld65 src/*.o -C nes.cfg -o ex04-input.nes
+	ld65 src/*.o -C nes.cfg -o ex4-input.nes
 
 main:
 	ca65 src/main.asm

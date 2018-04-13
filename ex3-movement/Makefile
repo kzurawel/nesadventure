@@ -1,5 +1,5 @@
 build: main sprite
-	ld65 src/*.o -C nes.cfg -o ex03-movement.nes
+	ld65 src/*.o -C nes.cfg -o ex3-movement.nes
 
 main:
 	ca65 src/main.asm
