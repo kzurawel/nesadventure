@@ -41,15 +41,10 @@
 
 .export update_sprite_position
 .proc update_sprite_position
-  PHA
   PHP
 
-  LDA sprite_x
-  CLC
-  ADC #$01
-  STA sprite_x
+  INC sprite_x
 
   PLP
-  PLA
   RTS
 .endproc

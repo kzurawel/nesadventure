@@ -50,7 +50,7 @@ set_up_sprites:
   LDA sprites,x       ; load next byte of sprite data
   STA $0200,x         ; copy to $0200 + x
   INX
-  CPX #$10            ; have we copied 16 values?
+  CPX #$08            ; have we copied 8 values?
   BNE set_up_sprites  ; if no, repeat
 
 vblankwait:       ; wait for another vblank before continuing

@@ -45,7 +45,6 @@ vblankwait:     ; wait for PPU to fully boot up
 .proc main
   LDA #$70        ; set up initial sprite values
   STA sprite_x    ; these are stored in zeropage
-  LDA #$30
   STA sprite_y
 
   LDX PPUSTATUS   ; reset PPUADDR latch
