@@ -74,6 +74,7 @@
   STA PPUDATA
 
   ; finally, set up the palettes
+	; for each 2x2 area of nametable
   ; by writing to the attribute table
   JSR write_attribute_table
 
@@ -87,6 +88,7 @@
 .endproc
 
 .proc draw_water
+	; draw a 2x2 block of water tiles
   ; memory address to start at in X and Y
   ; X = high byte
   ; Y = low byte
@@ -114,6 +116,12 @@
 .endproc
 
 .proc draw_desert
+	; draw a 2x2 block of desert tiles
+  ; memory address to start at in X and Y
+  ; X = high byte
+  ; Y = low byte
+  ; This uses all registers and does not save them!
+  ; (beware)
   LDA PPUSTATUS
   STX PPUADDR
   STY PPUADDR
