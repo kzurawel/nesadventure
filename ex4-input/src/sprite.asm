@@ -20,7 +20,7 @@
   ; left-side tile will come off the stack first.
   LDA direction
   AND #BTN_LEFT
-  BEQ check_right
+  BEQ check_right ; if 0, left is not pressed
   LDA #$07
   PHA
   LDA #$09
@@ -30,7 +30,7 @@
 check_right:
   LDA direction
   AND #BTN_RIGHT
-  BEQ check_down
+  BEQ check_down ; if 0, right is not pressed
   LDA #$08
   PHA
   LDA #$06
@@ -40,7 +40,7 @@ check_right:
 check_down:
   LDA direction
   AND #BTN_DOWN
-  BEQ check_up
+  BEQ check_up ; if 0, down is not pressed
   LDA #$05
   PHA
   LDA #$04
@@ -70,7 +70,7 @@ tiles_pushed_to_stack:
   STA $0205
   LDA #%00000000
   STA $0206
-  TXA ; X still contains sprite_x
+  TXA ; X still contains sprite_x, but we need to adjust x position
   CLC
   ADC #$08 ; add 8 to put second tile to the right
   STA $0207
@@ -98,7 +98,7 @@ tiles_pushed_to_stack:
   ; if PC gets here, left is pressed
   DEC sprite_x
   LDA #BTN_LEFT
-  STA direction
+  STA direction  ; save "left" as sprite direction
   JMP start_vertical_checks
 done_with_left:
   LDA buttons1
@@ -107,8 +107,7 @@ done_with_left:
   ; if PC gets here, right is pressed
   INC sprite_x
   LDA #BTN_RIGHT
-  STA direction
-  ; no jump - we always want to check up/down next
+  STA direction  ; save "right" as sprite direction
 
   ; now check for up / down
   ; again, assume only one can be pressed at a time
@@ -119,7 +118,9 @@ start_vertical_checks:
   ; if PC gets here, down is pressed
   INC sprite_y
   LDA #BTN_DOWN
-  STA direction
+  STA direction ; save "down" as sprite direction
+                ; this comes after left/right checks,
+                ; so diagonals will always face up/down
   JMP updates_complete
 done_with_down:
   LDA buttons1
@@ -128,7 +129,7 @@ done_with_down:
   ; if PC gets here, up is pressed
   DEC sprite_y
   LDA #BTN_UP
-  STA direction
+  STA direction ; save "up" as sprite direction
 
 updates_complete:
   PLP

@@ -20,15 +20,17 @@
 
   LDA #$01
   STA buttons1  ; start with %00000001 and
-                ; move the 1 left until done
+                ; move the 1 left until it
+                ; falls into the carry flag
                 ; ("ring counter")
 
 get_buttons:
-  LDA CONTROLLER1 ; read next button state
-  LSR A           ; shift button state to carry flag
-  ROL buttons1    ; rotate button state into buttons1
-                  ; and leftmost 0 into carry flag
-  BCC get_buttons ; continue until original 1 in carry flag
+  LDA CONTROLLER1 ; read next button's state
+  LSR A           ; shift button state right, into carry flag
+  ROL buttons1    ; rotate button state from carry flag
+                  ; onto right side of buttons1
+                  ; and leftmost 0 of buttons1 into carry flag
+  BCC get_buttons ; continue until original "1" is in carry flag
 
   PLP
   PLA

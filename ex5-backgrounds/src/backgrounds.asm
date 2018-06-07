@@ -10,6 +10,11 @@
   PHA
   PHP
 
+  ; Draw background objects by writing tile numbers
+  ; into nametable PPU address space.
+  ; There are definitely more efficient ways to do this!
+  ; (compression techniques like "RLE" help a lot)
+
   ; lake
   LDX #$22
   LDY #$84
@@ -51,6 +56,7 @@
   JSR draw_desert
 
   ; carve out a few desert tiles to make it look less blocky
+  ; (overwrite previously-written desert tiles with empty background)
   LDA PPUSTATUS
   LDA #$22
   STA PPUADDR
@@ -74,7 +80,7 @@
   STA PPUDATA
 
   ; finally, set up the palettes
-	; for each 2x2 area of nametable
+  ; for each 2x2 area of nametable
   ; by writing to the attribute table
   JSR write_attribute_table
 
@@ -88,8 +94,8 @@
 .endproc
 
 .proc draw_water
-	; draw a 2x2 block of water tiles
-  ; memory address to start at in X and Y
+  ; draw a 2x2 block of water tiles
+  ; memory address to start at stored in X and Y
   ; X = high byte
   ; Y = low byte
   ; This uses all registers and does not save them!
@@ -116,8 +122,8 @@
 .endproc
 
 .proc draw_desert
-	; draw a 2x2 block of desert tiles
-  ; memory address to start at in X and Y
+  ; draw a 2x2 block of desert tiles
+  ; memory address to start at stored in X and Y
   ; X = high byte
   ; Y = low byte
   ; This uses all registers and does not save them!

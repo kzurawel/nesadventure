@@ -97,6 +97,7 @@ palettes:
 .byte $29, $11, $21, $31
 ; third palette - desert
 .byte $29, $0f, $37, $26
+; fourth palette - ???
 .byte $29, $09, $19, $29
 
 ; sprite palettes
