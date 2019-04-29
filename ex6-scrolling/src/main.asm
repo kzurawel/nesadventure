@@ -50,8 +50,6 @@ vblankwait:     ; wait for PPU to fully boot up
 
 	JSR update_scroll
 
-
-done_with_scroll:
 	LDA scroll_x  ; horizontal scroll
   STA PPUSCROLL
   LDA #$00			; vertical scroll
