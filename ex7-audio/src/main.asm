@@ -122,7 +122,7 @@ vblankwait:       ; wait for another vblank before continuing
   STA PPUMASK
 
 	; load and play music
-	LDA #02  ; song index from tracks.inc
+	LDA #song_index_k11  ; song index from tracks.inc
 	STA sound_param_byte_0
 	JSR play_song
 
